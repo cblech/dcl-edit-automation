@@ -7,13 +7,22 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
+        
+      - name: Cache Unity files
+        uses: actions/cache@v3
+        with:
+          path: ${{ github.workspace }}\Library
+          key: unity-library
+          
       - name: List files in the repository
         run: |
           ls ${{ github.workspace }}
+          
       - name: Build Windows
         shell: cmd
         run: |
           start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" -projectPath ${{ github.workspace }} -batchmode -buildWindowsPlayer ${{ github.workspace }}\Build\testbuild.exe -quit
+          
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
