@@ -12,9 +12,5 @@ jobs:
           ls ${{ github.workspace }}
       - name: Build Windows
         run: |
-          "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" \|
-          -projectPath ${{ github.workspace }} \|
-          -batchmode \|
-          -buildWindowsPlayer ${{ github.workspace }}\..\..\UnityBuilds\dcl-edit\dcl-edit.exe \|
-          -quit
+          "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" -projectPath ${{ github.workspace }} -batchmode -buildWindowsPlayer ${{ github.workspace }}\..\..\UnityBuilds\dcl-edit\dcl-edit.exe -quit
           
