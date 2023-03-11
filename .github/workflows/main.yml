@@ -14,9 +14,6 @@ jobs:
           path: ${{ github.workspace }}\Library
           key: unity-library
           
-      #- name: Make Library folder
-      #  run: mkdir Library; echo foo | Out-File Library/foo.txt
-          
       - name: Build Windows
         shell: cmd
         run: |
