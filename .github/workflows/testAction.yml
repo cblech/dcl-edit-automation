@@ -5,4 +5,4 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: self-hosted
     steps:
-      - run: $Env:Path
+      - run: zstd
