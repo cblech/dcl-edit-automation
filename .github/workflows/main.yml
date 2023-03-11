@@ -13,5 +13,13 @@ jobs:
       - name: Build Windows
         shell: cmd
         run: |
-          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" -projectPath C:\Users\Administrator\repos\dcl-edit -batchmode -buildWindowsPlayer C:\Users\Administrator\UnityBuilds\dcl-edit\testbuild.exe -quit
+          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" -projectPath ${{ github.workspace }} -batchmode -buildWindowsPlayer ${{ github.workspace }}\..\testbuild.exe -quit
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          # Artifact name
+          name: Some build # optional, default is artifact
+          # A file, directory or wildcard pattern that describes what to upload
+          path: ${{ github.workspace }}\..\testbuild.exe
+          
           
