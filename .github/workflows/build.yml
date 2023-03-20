@@ -22,7 +22,23 @@ jobs:
           -projectPath ${{ github.workspace }} 
           -batchmode 
           -buildWindowsPlayer ${{ github.workspace }}\Build\dcl-edit-version-windows-x86\dcl-edit.exe 
+          -quit
+          
+      - name: Build Linux
+        shell: cmd
+        run: >
+          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
+          -projectPath ${{ github.workspace }} 
+          -batchmode 
           -buildLinux64Player ${{ github.workspace }}\Build\dcl-edit-version-linux\dcl-edit
+          -quit
+          
+      - name: Build Mac
+        shell: cmd
+        run: >
+          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
+          -projectPath ${{ github.workspace }} 
+          -batchmode 
           -buildOSXUniversalPlayer ${{ github.workspace }}\Build\dcl-edit-version-macos.app
           -quit
           
