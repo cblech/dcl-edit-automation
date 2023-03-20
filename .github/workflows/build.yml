@@ -1,8 +1,8 @@
-name: GitHub Actions Demo
+name: Build dcl-edit
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
-  Explore-GitHub-Actions:
+  build-dcl-edit:
     runs-on: self-hosted
     steps:
       - name: Check out repository code
@@ -18,7 +18,11 @@ jobs:
       - name: Build Windows
         shell: cmd
         run: |
-          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" -projectPath ${{ github.workspace }} -batchmode -buildWindowsPlayer ${{ github.workspace }}\Build\testbuild.exe -quit
+          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe"
+          -projectPath ${{ github.workspace }}
+          -batchmode
+          -buildWindowsPlayer ${{ github.workspace }}\dcl-edit-version-windows-x86\dcl-edit.exe
+          -quit
           
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
