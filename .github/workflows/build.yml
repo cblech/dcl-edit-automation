@@ -34,7 +34,7 @@ jobs:
           -quit
           
       - name: Build Mac
-        shell: cmd
+        shell: cmd 
         run: >
           start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
           -projectPath ${{ github.workspace }} 
