@@ -117,6 +117,7 @@ jobs:
           branch: ref/feautre/release_version_${{ github.event.inputs.version }}
           base: Refactoring
           body: this is some cool description for this pull request
+          token: ${{ secrets.GH_TOKEN }}
       
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
