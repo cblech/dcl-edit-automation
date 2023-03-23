@@ -72,7 +72,19 @@ jobs:
       #    -batchmode 
       #    -buildOSXUniversalPlayer ${{ github.workspace }}\Build\dcl-edit-version-macos.app
       #    -quit
+      
+      - name: Pack builds
+        run: |
+          7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86
+          7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar.gz ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar -mx=9
           
+      #- name: GH Release
+      #  uses: softprops/action-gh-release@v0.1.15
+      #  with:
+      #    files: |
+      #      Release.txt
+      #      LICENSE
+      
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
