@@ -77,6 +77,11 @@ jobs:
         run: |
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar.gz ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar -mx=9
+          7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux.tar ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux
+          7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux.tar.gz ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux.tar -mx=9
+          7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app
+          7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar -mx=9
+          
           
       #- name: GH Release
       #  uses: softprops/action-gh-release@v0.1.15
