@@ -20,18 +20,30 @@ jobs:
           path: ${{ github.workspace }}\Library
           key: unity-library
           restore-keys: unity-
-          
-          
-      - name: Build All
-        shell: cmd
-        run: >
-          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
-          -projectPath ${{ github.workspace }} 
-          -batchmode 
-          -buildWindowsPlayer ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86\dcl-edit.exe 
-          -buildLinux64Player ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux\dcl-edit
-          -buildOSXUniversalPlayer ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app
-          -quit
+      
+      #- name: Update Version number to ${{ github.event.inputs.version }}
+      #  shell: pwsh
+      #  run: C:\Users\Administrator\repos\workflow\changeVersionNumber.ps1 -projectPath ${{ github.workspace }} -version ${{ github.event.inputs.version }}
+        
+      - name: Fake build
+        run: |
+          New-Item -Path ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86 -ItemType Directory
+          Set-Content ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86\dcl-edit.exe.txt -Value "I am a Windows executable"
+          New-Item -Path ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux -ItemType Directory
+          Set-Content ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux\dcl-edit.txt -Value "I am a Linux executable"
+          New-Item -Path ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app -ItemType Directory
+          Set-Content ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app\macapp.txt -Value "I am a Mac executable"
+        
+      #- name: Build All
+      #  shell: cmd
+      #  run: >
+      #    start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
+      #    -projectPath ${{ github.workspace }} 
+      #    -batchmode 
+      #    -buildWindowsPlayer ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86\dcl-edit.exe 
+      #    -buildLinux64Player ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux\dcl-edit
+      #    -buildOSXUniversalPlayer ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app
+      #    -quit
           
       #- name: Build Windows
       #  shell: cmd
