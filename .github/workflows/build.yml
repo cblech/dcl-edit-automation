@@ -90,7 +90,7 @@ jobs:
       - name: Commit and push version number update
         run: |
           git commit -am "Updated verion number to ${{ github.event.inputs.version }}"
-          git push
+          git push origin HEAD
            
       - name: Create tag
         run: |
