@@ -82,13 +82,23 @@ jobs:
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar -mx=9
           
+      - name: "Create tag"
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{ github.event.inputs.version }}"
           
-      #- name: GH Release
-      #  uses: softprops/action-gh-release@v0.1.15
-      #  with:
-      #    files: |
-      #      Release.txt
-      #      LICENSE
+      - name: GH Release
+        uses: softprops/action-gh-release@v0.1.15
+        with:
+          tag_name: "${{ github.event.inputs.version }}"
+          name: "Release ${{ github.event.inputs.version }}"
+          body: "This is a very cool Release (Version: ${{ github.event.inputs.version }})"
+          files: |
+            ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar.gz
+            ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux.tar.gz
+            ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz
+          draft: true
+          token: ${{ secrets.GH_TOKEN }}
       
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
