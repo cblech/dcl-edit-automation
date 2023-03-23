@@ -100,9 +100,9 @@ jobs:
           name: "Release ${{ github.event.inputs.version }}"
           body: "This is a very cool Release (Version: ${{ github.event.inputs.version }})"
           files: |
-            Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar.gz
-            Build\dcl-edit-${{ github.event.inputs.version }}-linux.tar.gz
-            Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz
+            Build/dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar.gz
+            Build/dcl-edit-${{ github.event.inputs.version }}-linux.tar.gz
+            Build/dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz
           fail_on_unmatched_files: true
           draft: true
           token: ${{ secrets.GH_TOKEN }}
