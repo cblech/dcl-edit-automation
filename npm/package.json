@@ -1,6 +1,6 @@
 {
   "name": "dcl-edit",
-  "version": "7.3.5",
+  "version": "4.1.2",
   "description": "A scene editor for the Decentraland SDK",
   "main": "./index.js",
   "scripts": {
