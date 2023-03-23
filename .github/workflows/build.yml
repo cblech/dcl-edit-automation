@@ -111,14 +111,16 @@ jobs:
           token: ${{ secrets.GH_TOKEN }}
       
       - name: create pull request
-        uses: peter-evans/create-pull-request@v4
-        with:
-          title: Release of version ${{ github.event.inputs.version }}
-          branch: ref/feautre/release_version_${{ github.event.inputs.version }}
-          base: Refactoring
-          body: this is some cool description for this pull request
-          token: ${{ secrets.GH_TOKEN }}
-      
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: >
+          gh pr create 
+          --repo cblech/dcl-edit-automation 
+          --base Refactoring 
+          --head ref/feautre/release_version_${{ github.event.inputs.version }} 
+          --title "Release of version ${{ github.event.inputs.version }}"
+          --body "this is some cool description for this pull request"
+        
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
         with:
