@@ -22,7 +22,6 @@ jobs:
           restore-keys: unity-
       
       - name: Update Version number to ${{ github.event.inputs.version }}
-        shell: pwsh
         run: C:\Users\Administrator\repos\workflow\changeVersionNumber.ps1 -projectPath ${{ github.workspace }} -version ${{ github.event.inputs.version }}
         
       - name: Fake build
