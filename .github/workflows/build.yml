@@ -23,14 +23,14 @@ jobs:
       #    key: unity-library
       #    restore-keys: unity-
       
+      - name: Create new branch
+        run: |
+          git branch -c ref/feautre/release_version_${{ github.event.inputs.version }}
+          git checkout ref/feautre/release_version_${{ github.event.inputs.version }}
+      
       - name: Update Version number to ${{ github.event.inputs.version }}
         run: C:\Users\Administrator\repos\workflow\changeVersionNumber.ps1 -projectPath ${{ github.workspace }} -version ${{ github.event.inputs.version }}
         
-      - name: Commit and push version number update
-        run: |
-          git commit -am "Updated verion number to ${{ github.event.inputs.version }}"
-          git push
-   
       - name: Fake build
         run: |
           New-Item -Path ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86 -ItemType Directory
@@ -87,8 +87,12 @@ jobs:
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar -mx=9
       
+      - name: Commit and push version number update
+        run: |
+          git commit -am "Updated verion number to ${{ github.event.inputs.version }}"
+          git push
            
-      - name: "Create tag"
+      - name: Create tag
         run: |
           git tag ${{ github.event.inputs.version }}
           git push --tags
@@ -104,8 +108,15 @@ jobs:
             Build/dcl-edit-${{ github.event.inputs.version }}-linux.tar.gz
             Build/dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz
           fail_on_unmatched_files: true
-          draft: true
           token: ${{ secrets.GH_TOKEN }}
+      
+      - name: create pull request
+        uses: peter-evans/create-pull-request@v4
+        with:
+          title: Release of version ${{ github.event.inputs.version }}
+          branch: ref/feautre/release_version_${{ github.event.inputs.version }}
+          base: Refactoring
+          body: this is some cool description for this pull request
       
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
