@@ -14,12 +14,12 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
         
-      - name: Cache Unity files
-        uses: actions/cache@v3
-        with:
-          path: ${{ github.workspace }}\Library
-          key: unity-library
-          restore-keys: unity-
+      #- name: Cache Unity files
+      #  uses: actions/cache@v3
+      #  with:
+      #    path: ${{ github.workspace }}\Library
+      #    key: unity-library
+      #    restore-keys: unity-
       
       - name: Update Version number to ${{ github.event.inputs.version }}
         run: C:\Users\Administrator\repos\workflow\changeVersionNumber.ps1 -projectPath ${{ github.workspace }} -version ${{ github.event.inputs.version }}
