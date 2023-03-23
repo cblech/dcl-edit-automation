@@ -26,6 +26,11 @@ jobs:
       - name: Update Version number to ${{ github.event.inputs.version }}
         run: C:\Users\Administrator\repos\workflow\changeVersionNumber.ps1 -projectPath ${{ github.workspace }} -version ${{ github.event.inputs.version }}
         
+      - name: Commit and push version number update
+        run: |
+          git commit -am "Updated verion number to ${{ github.event.inputs.version }}"
+          git push
+   
       - name: Fake build
         run: |
           New-Item -Path ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86 -ItemType Directory
@@ -81,7 +86,8 @@ jobs:
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux.tar.gz ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux.tar -mx=9
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app
           7z a ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar -mx=9
-          
+      
+           
       - name: "Create tag"
         run: |
           git tag ${{ github.event.inputs.version }}
@@ -97,6 +103,7 @@ jobs:
             ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86.tar.gz
             ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux.tar.gz
             ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.tar.gz
+          fail_on_unmatched_files: true
           draft: true
           token: ${{ secrets.GH_TOKEN }}
       
@@ -108,10 +115,5 @@ jobs:
           # A file, directory or wildcard pattern that describes what to upload
           path: ${{ github.workspace }}\Build
           
-      - name: Commit and push version number update
-        run: |
-          git commit -am "Updated verion number to ${{ github.event.inputs.version }}"
-          git push
 
-          
           
