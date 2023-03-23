@@ -1,6 +1,12 @@
 name: Build dcl-edit
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on: 
+  workflow_dispatch:
+    inputs:
+      version:
+        required: true
+        description: "The version number of the build. Format `major.minor.patch`. E.g.: `2.1.24`"
+    
 jobs:
   build-dcl-edit:
     runs-on: self-hosted
@@ -15,32 +21,44 @@ jobs:
           key: unity-library
           restore-keys: unity-
           
-      - name: Build Windows
+          
+      - name: Build All
         shell: cmd
         run: >
           start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
           -projectPath ${{ github.workspace }} 
           -batchmode 
-          -buildWindowsPlayer ${{ github.workspace }}\Build\dcl-edit-version-windows-x86\dcl-edit.exe 
+          -buildWindowsPlayer ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-windows-x86\dcl-edit.exe 
+          -buildLinux64Player ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-linux\dcl-edit
+          -buildOSXUniversalPlayer ${{ github.workspace }}\Build\dcl-edit-${{ github.event.inputs.version }}-macos.app
           -quit
           
-      - name: Build Linux
-        shell: cmd
-        run: >
-          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
-          -projectPath ${{ github.workspace }} 
-          -batchmode 
-          -buildLinux64Player ${{ github.workspace }}\Build\dcl-edit-version-linux\dcl-edit
-          -quit
-          
-      - name: Build Mac
-        shell: cmd 
-        run: >
-          start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
-          -projectPath ${{ github.workspace }} 
-          -batchmode 
-          -buildOSXUniversalPlayer ${{ github.workspace }}\Build\dcl-edit-version-macos.app
-          -quit
+      #- name: Build Windows
+      #  shell: cmd
+      #  run: >
+      #    start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
+      #    -projectPath ${{ github.workspace }} 
+      #    -batchmode 
+      #    -buildWindowsPlayer ${{ github.workspace }}\Build\dcl-edit-version-windows-x86\dcl-edit.exe 
+      #    -quit
+      #    
+      #- name: Build Linux
+      #  shell: cmd
+      #  run: >
+      #    start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
+      #    -projectPath ${{ github.workspace }} 
+      #    -batchmode 
+      #    -buildLinux64Player ${{ github.workspace }}\Build\dcl-edit-version-linux\dcl-edit
+      #    -quit
+      #    
+      #- name: Build Mac
+      #  shell: cmd 
+      #  run: >
+      #    start "Build" /wait "c:\Program Files\Unity\Hub\Editor\2020.3.21f1\Editor\Unity.exe" 
+      #    -projectPath ${{ github.workspace }} 
+      #    -batchmode 
+      #    -buildOSXUniversalPlayer ${{ github.workspace }}\Build\dcl-edit-version-macos.app
+      #    -quit
           
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.2
